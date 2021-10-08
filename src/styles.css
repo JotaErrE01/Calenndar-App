@@ -1,0 +1,114 @@
+body{
+    background-color: beige;
+    /* height: 100vh; */
+    /* max-height: 100vh; */
+    /* overflow: hidden; */
+}
+
+/* Modal */
+.ReactModalPortal > div{
+    opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    transition: opacity .2s ease-in-out;
+    z-index: 999;
+}
+
+.modal-fondo {
+    background-color: rgba(0, 0, 0, 0.3);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    position: fixed;
+}
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+
+.ReactModalPortal .ReactModal__Overlay--before-close {
+    opacity: 0;
+}
+
+.modal {
+    background: white;
+    border-radius: 5px;
+    color: rgb(51, 51, 51);
+    display: inline;
+    max-height: 620px;
+    max-width: 500px;
+    outline: none;
+    padding: 10px;
+}
+
+.altura{
+    height: 100vh;
+    overflow: hidden;
+}
+
+/*Nav bar */
+.navbar {
+    /* margin-top: 10px; */
+    max-height: 56px;
+}
+
+/*Calendar*/
+.rbc-calendar{
+    height: calc( 100vh - 80px ) !important;
+}
+
+.rbc-time-column{
+    background-color: beige;
+    /* border-color: black; */
+}
+
+.rbc-header{
+    background-color: beige;
+    /* border-color: rgba(189, 189, 189, 0.801);; */
+}
+
+.rbc-day-bg{
+    background-color: beige;
+}
+
+.MuiFormControl-root  {
+    width: 100%;
+}
+
+/* .rbc-timeslot-group{
+    border-color: rgba(189, 189, 189, 0.801);
+} */
+
+/* .rbc-time-content > * + * > * {
+    border-color: rgba(189, 189, 189, 0.801);
+} */
+
+.borde{
+    border: 10px solid black;
+    /* border-color: violet; */
+}
+
+/*Sweet alert styles*/
+#swal2-title{
+    color: white;
+}
+
+#swal2-html-container{
+    color: white;
+}
+
+/* FABS */
+.fab{
+    border-radius: 100%;
+    bottom: 25px;
+    font-size: 25px;
+    padding: 15px;
+    position: fixed;
+    right: 25px;
+    /* z-index: 999999; */
+}
