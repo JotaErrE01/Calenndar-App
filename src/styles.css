@@ -112,3 +112,12 @@ body{
     right: 25px;
     /* z-index: 999999; */
 }
+
+.fab-danger{
+    border-radius: 10px;
+    bottom: 25px;
+    font-size: 12px;
+    padding: 10px;
+    position: fixed;
+    left: 25px; 
+}

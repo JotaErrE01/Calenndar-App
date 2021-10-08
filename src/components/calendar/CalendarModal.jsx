@@ -15,7 +15,7 @@ import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/uiActions';
-import { eventAddNew } from '../../actions/eventActions';
+import { eventAddNew, eventUnsetActive, eventUpdated } from '../../actions/eventActions';
 
 const style = {
     bgcolor: 'background.paper',
@@ -44,14 +44,12 @@ const style = {
 const initialState = {
     title: '',
     notes: '',
-    start: '',
-    end: ''
+    start: null,
+    end: null
 }
 
 const KeepMountedModal = () => {
     
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
     const [uiError, setuiError] = useState({ 
         error: null,
         msg: ''
@@ -72,13 +70,22 @@ const KeepMountedModal = () => {
         
         if( activeEvent ){
             setFormValues( activeEvent );
-            setEndDate( activeEvent.start );
-            setStartDate( activeEvent.end );
+        }else{
+            setFormValues( initialState );
         }
 
-    }, [ activeEvent ]);
+    }, [ activeEvent, setFormValues ]);
     
-    const handleClose = () => dispatch( uiCloseModal() );
+    const handleClose = () => {
+        // resetear el form
+        setFormValues( initialState );
+
+        //resetear evento activo
+        dispatch( eventUnsetActive() ); 
+
+        //cerrar el formulario
+        dispatch( uiCloseModal());
+    };
 
     const handleInputChange = ({ target }) => {
         setFormValues({
@@ -88,7 +95,6 @@ const KeepMountedModal = () => {
     };
 
     const handleStartDate = newDate => {
-        setStartDate(newDate);
         setFormValues({
             ...formValues,
             start: newDate.toDate()
@@ -99,7 +105,6 @@ const KeepMountedModal = () => {
     // console.log(now.subtract(24, 'hours').toDate());
 
     const handleEndDate = newDate => {
-        setEndDate( newDate );
         setFormValues({
             ...formValues,
             end: newDate.toDate()
@@ -142,21 +147,29 @@ const KeepMountedModal = () => {
             return;
         }
 
-        dispatch( eventAddNew({
-            ...formValues,
-            id: new Date().getTime()  ,
-            user: {
-                _id: '123',
-                name: 'Jonathan'
-            }
-        }));
+        //TODO: Realizar grabacion en base de dato
+        if( activeEvent ){
+            dispatch( eventUpdated({
+                ...formValues,
+                id: activeEvent.id,
+                user: {
+                    _id: '123',
+                    name: 'Jonathan'
+                }
+            }));
+        }else{
+            dispatch( eventAddNew({
+                ...formValues,
+                id: new Date().getTime(),
+                user: {
+                    _id: '123',
+                    name: 'Jonathan'
+                }
+            }));
+        }
 
         //resetear el formulario
         setFormValues( initialState );
-
-        // resetear fechas
-        setStartDate( null );
-        setEndDate( null );
 
         //si hay errores quitarlos
         setuiError({ error: false, msg: '' });
@@ -190,7 +203,9 @@ const KeepMountedModal = () => {
                         <Typography style={{
                             color: 'white'
                         }} id="keep-mounted-modal-title" variant="h6" component="h2">
-                            Nuevo evento
+                            {
+                                activeEvent ? 'Actualizar Evento' : 'Nuevo evento'
+                            }
                             <hr />
                         </Typography>
                         <form 
@@ -201,7 +216,7 @@ const KeepMountedModal = () => {
                                 <div className="form-group">
                                         <DateTimePicker
                                             renderInput={(params) => <TextField {...params} />}
-                                            value={startDate}
+                                            value={start}
                                             label="Fecha y hora de inicio"
                                             onChange={ handleStartDate }
                                             // inputFormat="yyyy-MM-dd hh:mm a"
@@ -212,10 +227,10 @@ const KeepMountedModal = () => {
 
                                         <DateTimePicker
                                             renderInput={(params) => <TextField {...params} />}
-                                            value={endDate}  
+                                            value={ end }  
                                             label="Fecha y hora fin"
                                             onChange={ handleEndDate }
-                                            minDate={ startDate }
+                                            minDate={ moment( start ) }
                                             // minDateTime={ startDate } // la fecha que se pase como minima tiene que ser der formato del Adapter usado, en este caso el formato de moment
                                             // onError={console.log}
                                         />
