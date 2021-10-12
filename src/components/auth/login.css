@@ -1,5 +1,11 @@
 .login-container{
-    margin-top: 15%;
+    display: flex;
+    max-width: 50rem;
+    align-items: center;
+    height: 100vh;  
+}
+.row{
+    flex: 1;
 }
 .login-form-1{
     border-radius: 5px;
@@ -48,4 +54,9 @@
     color: #0062cc;
     font-weight: 600;
     text-decoration: none;
+}
+
+/* Color texto swal */
+.colorLoginSwal{
+    color: black!important;
 }

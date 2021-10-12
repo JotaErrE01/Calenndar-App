@@ -97,7 +97,7 @@ const KeepMountedModal = () => {
     const handleStartDate = newDate => {
         setFormValues({
             ...formValues,
-            start: newDate.toDate()
+            start: newDate?.toDate() || null
         });
     }
 
@@ -107,7 +107,7 @@ const KeepMountedModal = () => {
     const handleEndDate = newDate => {
         setFormValues({
             ...formValues,
-            end: newDate.toDate()
+            end: newDate?.toDate() || null
         });
     }
 
@@ -130,7 +130,7 @@ const KeepMountedModal = () => {
         }
 
         if(!momentEnd.isValid()){
-            customAlert.fire( 'Fecha de fin no valida', 'error' );
+            customAlert.fire( 'Error!', 'Fecha de fin no valida', 'error' );
             return;
         }
 
