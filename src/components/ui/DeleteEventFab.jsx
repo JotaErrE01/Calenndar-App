@@ -1,14 +1,13 @@
 import { useDispatch } from "react-redux";
-import { eventDeleted } from "../../actions/eventActions";
+import { EventStartDelete } from "../../actions/eventActions";
 
 const DeleteEventFab = () => {
 
     const dispatch = useDispatch();
 
     const handleDelete = () => {
-
-        // TODO: elmininar de la base de datos
-        dispatch( eventDeleted() );
+        
+        dispatch( EventStartDelete() );
 
     }
 

@@ -15,7 +15,7 @@ import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/uiActions';
-import { eventAddNew, eventUnsetActive, eventUpdated } from '../../actions/eventActions';
+import { eventStartAddNew, eventStartUpdating, eventUnsetActive } from '../../actions/eventActions';
 
 const style = {
     bgcolor: 'background.paper',
@@ -63,6 +63,7 @@ const KeepMountedModal = () => {
     const { title, notes, start, end } = formValues;
 
     const dispatch = useDispatch();
+    const { uid, name } = useSelector(state => state.auth);
     const { modalOpen } = useSelector(state => state.ui);
     const { activeEvent } = useSelector( state => state.calendar );
 
@@ -147,25 +148,16 @@ const KeepMountedModal = () => {
             return;
         }
 
-        //TODO: Realizar grabacion en base de dato
         if( activeEvent ){
-            dispatch( eventUpdated({
+            dispatch( eventStartUpdating({
                 ...formValues,
-                id: activeEvent.id,
                 user: {
-                    _id: '123',
-                    name: 'Jonathan'
+                    uid,
+                    name
                 }
             }));
         }else{
-            dispatch( eventAddNew({
-                ...formValues,
-                id: new Date().getTime(),
-                user: {
-                    _id: '123',
-                    name: 'Jonathan'
-                }
-            }));
+            dispatch( eventStartAddNew(formValues));
         }
 
         //resetear el formulario
@@ -221,8 +213,8 @@ const KeepMountedModal = () => {
                                             onChange={ handleStartDate }
                                             // inputFormat="yyyy-MM-dd hh:mm a"
                                         />
-
                                 </div>
+
                                 <div className="form-group">
 
                                         <DateTimePicker

@@ -6,10 +6,10 @@ import 'moment/locale/es-mx'; // Importar idioma en moment
 import { messages } from '../../helpers/calendar-messages';
 import Navbar from "../ui/Navbar";
 import CalendarEvent from './CalendarEvent';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CalendarModal from './CalendarModal';
 import { uiOpenModal } from '../../actions/uiActions';
-import { eventSetActive, eventUnsetActive } from '../../actions/eventActions';
+import { eventSetActive, eventStartLoading, eventUnsetActive } from '../../actions/eventActions';
 import AddNewFab from '../ui/AddNewFab';
 import DeleteEventFab from '../ui/DeleteEventFab';
 
@@ -56,6 +56,13 @@ const CalendarScreen = () => {
         // console.log(e);
         dispatch( eventUnsetActive() );
     }
+
+    //diparar accion para obtener eventos de la base de datos
+    useEffect(() => {
+        
+        dispatch( eventStartLoading() );
+
+    }, [ dispatch ])
 
     return (
         <div className="altura">

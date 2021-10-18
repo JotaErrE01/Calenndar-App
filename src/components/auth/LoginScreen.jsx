@@ -9,15 +9,15 @@ const LoginScreen = () => {
     const dispatch = useDispatch();
 
     const [ formLoginValues, handleLoginInputChange ] = useForm({
-        login_email: 'correo@correo.com',
-        login_password: '123456'
+        login_email: '',
+        login_password: ''
     });
 
     const [ formRegisterValues, handleRegisterInputChange ] = useForm({
-        register_name: 'Nando',
-        register_email: 'correo@correo.com',
-        register_password: '123456',
-        register_password2: '123456'
+        register_name: '',
+        register_email: '',
+        register_password: '',
+        register_password2: ''
     });
 
     const { register_name, register_email, register_password, register_password2 } = formRegisterValues;

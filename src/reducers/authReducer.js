@@ -24,7 +24,7 @@ const authReducer = ( state = initialState, action ) => {
             return{
                 checking: false
             }
-    
+
         default:
             return state;
     }
